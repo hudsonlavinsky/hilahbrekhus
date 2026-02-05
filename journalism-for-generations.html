@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journalism for Generations</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #f5f0e8;
+    --paper-light: #faf7f2;
+    --accent: #8b0000;
+    --accent-light: #a52a2a;
+    --rule: #c4b9a8;
+    --text-secondary: #5a5347;
+    --text-body: #3d3a35;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* --- HEADER / NAV --- */
+  header {
+    border-bottom: 3px double var(--ink);
+    background: var(--paper);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-top {
+    text-align: center;
+    padding: 28px 20px 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .logo-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+  }
+
+  .logo-mark {
+    width: 48px;
+    height: 48px;
+    position: relative;
+  }
+
+  .logo-mark svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .site-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .site-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 12px 20px;
+  }
+
+  nav a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text-secondary);
+    padding: 4px 0;
+    position: relative;
+    transition: color 0.3s;
+    cursor: pointer;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.3s;
+  }
+
+  nav a:hover, nav a.active {
+    color: var(--ink);
+  }
+
+  nav a:hover::after, nav a.active::after {
+    width: 100%;
+  }
+
+  /* --- PAGE STRUCTURE --- */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* --- HOME PAGE --- */
+  .hero {
+    padding: 80px 0 60px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+    margin: 0 auto;
+    margin-top: 40px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-text {
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: var(--text-body);
+    max-width: 620px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+
+  .mission-section {
+    padding: 60px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .mission-section h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+
+  .mission-section p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--text-body);
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 48px;
+    padding: 48px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .pillar {
+    text-align: center;
+    padding: 0 8px;
+  }
+
+  .pillar-number {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .pillar h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .pillar p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    font-weight: 300;
+  }
+
+  .home-cta {
+    text-align: center;
+    padding: 60px 0 80px;
+  }
+
+  .home-cta p {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--text-body);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .cta-button {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    border: 2px solid var(--ink);
+    color: var(--ink);
+    text-decoration: none;
+    transition: all 0.3s;
+    cursor: pointer;
+    background: transparent;
+  }
+
+  .cta-button:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* --- ABOUT PAGE --- */
+  .about-header {
+    padding: 80px 0 40px;
+    text-align: center;
+  }
+
+  .about-header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+
+  .about-header .byline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .about-photo {
+    width: 280px;
+    height: 340px;
+    margin: 40px auto;
+    background: var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+  }
+
+  .about-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .photo-placeholder {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .about-content {
+    padding: 20px 0 40px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .about-content p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--text-body);
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .about-content .placeholder-note {
+    font-style: italic;
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 40px;
+    border: 1px dashed var(--rule);
+    margin: 20px 0;
+    font-size: 1rem;
+  }
+
+  .email-cta {
+    text-align: center;
+    padding: 60px 0 80px;
+    border-top: 1px solid var(--rule);
+    margin-top: 40px;
+  }
+
+  .email-cta h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.6rem;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+
+  .email-cta p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* --- BLOG PAGE --- */
+  .blog-header {
+    padding: 80px 0 40px;
+    text-align: center;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .blog-header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+
+  .blog-header p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+  }
+
+  .blog-post {
+    padding: 60px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .blog-post:last-child {
+    border-bottom: none;
+  }
+
+  .blog-post-meta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .blog-post h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.25;
+    color: var(--ink);
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .blog-post h2:hover {
+    color: var(--accent);
+  }
+
+  .blog-post-body p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--text-body);
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .blog-post-body p:first-of-type::first-letter {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 3.8rem;
+    float: left;
+    line-height: 0.8;
+    margin-right: 10px;
+    margin-top: 6px;
+    color: var(--accent);
+    font-weight: 900;
+  }
+
+  .read-more {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s;
+    display: none;
+  }
+
+  .read-more:hover {
+    color: var(--ink);
+  }
+
+  /* --- FOOTER --- */
+  footer {
+    border-top: 3px double var(--ink);
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 40px;
+  }
+
+  .footer-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .footer-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+  }
+
+  /* --- ANIMATIONS --- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-in {
+    animation: fadeUp 0.7s ease-out forwards;
+    opacity: 0;
+  }
+
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.25s; }
+  .delay-3 { animation-delay: 0.4s; }
+  .delay-4 { animation-delay: 0.55s; }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 700px) {
+    .site-title { font-size: 1.5rem; }
+    .hero h1 { font-size: 2.2rem; }
+    .pillars { grid-template-columns: 1fr; gap: 40px; }
+    nav { gap: 24px; }
+    .about-photo { width: 220px; height: 280px; }
+    .logo-mark { width: 36px; height: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-top">
+    <div class="logo-container" onclick="showPage('home')">
+      <div class="logo-mark">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="6" width="40" height="36" rx="2" fill="none" stroke="#1a1a1a" stroke-width="2.5"/>
+          <line x1="4" y1="14" x2="44" y2="14" stroke="#1a1a1a" stroke-width="2"/>
+          <line x1="24" y1="14" x2="24" y2="42" stroke="#1a1a1a" stroke-width="1.5"/>
+          <rect x="8" y="7" width="14" height="5" rx="0.5" fill="#8b0000"/>
+          <line x1="28" y1="19" x2="40" y2="19" stroke="#c4b9a8" stroke-width="1.5"/>
+          <line x1="28" y1="23" x2="40" y2="23" stroke="#c4b9a8" stroke-width="1.5"/>
+          <line x1="28" y1="27" x2="40" y2="27" stroke="#c4b9a8" stroke-width="1.5"/>
+          <line x1="28" y1="31" x2="40" y2="31" stroke="#c4b9a8" stroke-width="1.5"/>
+          <line x1="28" y1="35" x2="40" y2="35" stroke="#c4b9a8" stroke-width="1.5"/>
+          <line x1="8" y1="19" x2="20" y2="19" stroke="#c4b9a8" stroke-width="1.5"/>
+          <line x1="8" y1="23" x2="20" y2="23" stroke="#c4b9a8" stroke-width="1.5"/>
+          <line x1="8" y1="27" x2="20" y2="27" stroke="#c4b9a8" stroke-width="1.5"/>
+          <line x1="8" y1="31" x2="20" y2="31" stroke="#c4b9a8" stroke-width="1.5"/>
+          <line x1="8" y1="35" x2="20" y2="35" stroke="#c4b9a8" stroke-width="1.5"/>
+          <text x="10" y="12" font-family="'Playfair Display', Georgia, serif" font-size="5.5" font-weight="900" fill="#f5f0e8">JFG</text>
+        </svg>
+      </div>
+      <div>
+        <div class="site-title">Journalism for Generations</div>
+        <div class="site-subtitle">Truth is a craft worth preserving</div>
+      </div>
+    </div>
+  </div>
+  <nav>
+    <a onclick="showPage('home')" id="nav-home" class="active">Home</a>
+    <a onclick="showPage('about')" id="nav-about">About</a>
+    <a onclick="showPage('blog')" id="nav-blog">Blog</a>
+  </nav>
+</header>
+
+<!-- ==================== HOME PAGE ==================== -->
+<div id="page-home" class="page active">
+  <main>
+    <section class="hero">
+      <h1 class="animate-in">The Future of Journalism<br>Starts With <em>Us</em></h1>
+      <p class="hero-text animate-in delay-2">
+        In a time of hyper-polarized media and eroding public trust, Journalism for Generations is a student-led initiative dedicated to preserving the craft of honest reporting and empowering young people to demand — and create — better news.
+      </p>
+    </section>
+
+    <section class="mission-section animate-in delay-3">
+      <h2>Our Mission</h2>
+      <p>
+        We believe journalism is not just an industry — it's a public good. When reporting is done with integrity, it holds power accountable, connects communities, and helps people make informed decisions about the world around them. But that foundation is fracturing. Misinformation spreads faster than corrections. Algorithms prioritize outrage over accuracy. And an entire generation is growing up unsure of what — or whom — to trust.
+      </p>
+      <p>
+        Journalism for Generations was founded to confront that reality head-on. Our mission is to ensure that future generations can not only interpret the news critically, but can eventually contribute to a well-functioning journalism industry themselves. We're building a space for media literacy, honest conversation, and the kind of slow, careful thinking that good reporting demands.
+      </p>
+    </section>
+
+    <div class="pillars animate-in delay-4">
+      <div class="pillar">
+        <div class="pillar-number">I</div>
+        <h3>Understand</h3>
+        <p>Learn how quality journalism works — the ethics, the process, and why it matters to a functioning democracy.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-number">II</div>
+        <h3>Recognize</h3>
+        <p>Develop the tools to identify bias, misinformation, and the difference between reporting and opinion.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-number">III</div>
+        <h3>Contribute</h3>
+        <p>Equip young people to create responsible, honest journalism in their own communities and beyond.</p>
+      </div>
+    </div>
+
+    <section class="home-cta">
+      <p>"The press was to serve the governed, not the governors."</p>
+      <a class="cta-button" onclick="showPage('blog')">Read the Blog</a>
+    </section>
+  </main>
+</div>
+
+<!-- ==================== ABOUT PAGE ==================== -->
+<div id="page-about" class="page">
+  <main>
+    <section class="about-header animate-in">
+      <h1>About</h1>
+      <span class="byline">The story behind the mission</span>
+    </section>
+
+    <div class="about-photo animate-in delay-1">
+      <span class="photo-placeholder">Photo coming soon</span>
+    </div>
+
+    <section class="about-content animate-in delay-2">
+      <h2 style="font-family: 'Playfair Display', Georgia, serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 24px;">Meet Hilah Brekhus</h2>
+
+      <div class="placeholder-note">
+        Hilah's personal story and background will be added here. Check back soon.
+      </div>
+    </section>
+
+    <section class="email-cta animate-in delay-3">
+      <h3>Join the Conversation</h3>
+      <p>Interested in being part of a generation that demands better journalism? Get in touch to join our mailing list and stay updated on new posts, resources, and opportunities.</p>
+      <a class="cta-button" href="mailto:hilahbrekhus@gmail.com?subject=Join the Mailing List">Email hilahbrekhus@gmail.com to Join</a>
+    </section>
+  </main>
+</div>
+
+<!-- ==================== BLOG PAGE ==================== -->
+<div id="page-blog" class="page">
+  <main>
+    <section class="blog-header animate-in">
+      <h1>The Blog</h1>
+      <p>Essays, reflections, and resources on the future of journalism</p>
+    </section>
+
+    <article class="blog-post animate-in delay-2">
+      <div class="blog-post-meta">January 2, 2026 &mdash; By Hilah Brekhus</div>
+      <h2>Welcome to Journalism for Generations</h2>
+      <div class="blog-post-body">
+        <p>There was a moment during my junior year at Redwood High School when I realized something had shifted. A classmate shared a headline in our group chat, completely stripped of context, and within minutes people were arguing — not about the facts, but about which "side" the article was on. Nobody had actually read the piece. That moment stuck with me, and it became the seed for what you're reading right now.</p>
+
+        <p>Journalism for Generations exists because I believe my generation has a responsibility we didn't ask for but can't afford to ignore. We are growing up in an era where the line between news and opinion has been blurred almost beyond recognition, where algorithms decide what we see, and where trust in media is at historic lows. But instead of walking away from journalism, I think we need to walk toward it.</p>
+
+        <p>As a writer for The Redwood Bark, I've seen firsthand what real reporting looks like at its core. It's not glamorous. It means showing up to school board meetings. It means calling people back a second and third time. It means writing a story that might not get clicks but matters to the community. Student journalism taught me that the craft isn't about pushing an agenda. It's about asking honest questions and doing the difficult work of finding honest answers.</p>
+
+        <p>This site is my attempt to bring that ethos beyond the walls of one high school. Journalism for Generations is a space dedicated to three things: understanding how quality journalism works, recognizing when it doesn't, and equipping young people with the tools to both consume and create news responsibly. Through essays, interviews, and resources, I want to build a community of students and young readers who refuse to accept a broken media landscape as inevitable.</p>
+
+        <p>I'm not pretending to have all the answers. I'm eighteen, and I'm learning constantly. But I think that's actually the point. The future of journalism won't be shaped by pundits on cable news. It will be shaped by the people who grow up demanding better, and who are willing to do the work themselves.</p>
+
+        <p>If that sounds like something worth being part of, you're in the right place. Welcome aboard.</p>
+      </div>
+    </article>
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-title">Journalism for Generations</div>
+  <div class="footer-text">A student-led initiative for media literacy and journalistic integrity</div>
+</footer>
+
+<script>
+  function showPage(page) {
+    // Hide all pages
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    // Show selected page
+    document.getElementById('page-' + page).classList.add('active');
+    // Update nav
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    document.getElementById('nav-' + page).classList.add('active');
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Re-trigger animations
+    const target = document.getElementById('page-' + page);
+    target.querySelectorAll('.animate-in').forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight; // trigger reflow
+      el.style.animation = '';
+    });
+  }
+</script>
+
+</body>
+</html>
